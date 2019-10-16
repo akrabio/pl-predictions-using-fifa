@@ -1,16 +1,15 @@
 import argparse
 
 import numpy as np
-
 from fifa_ratings_predictor.model import NeuralNet
 from fifa_ratings_predictor.data_methods import normalise_features
 
 
 def one_match_simulator(home_goalkeeper, home_defenders, home_midfielders, home_forwards, away_goalkeeper,
                         away_defenders, away_midfielders, away_forwards,
-                        model_name='/Users/bgrantham/Documents/Personal/fifa-ratings-predictor/fifa_ratings_predictor'
-                                   '/deep-models'
-                                   '-all/deep'):
+                        model_name='/Users/offera/Desktop/Personal Projects/betPredictor/pl-predictions-using-fifa/fifa_ratings_predictor'
+                                   '/models/E0'
+                                   '/deep'):
     home_defenders = home_defenders + [0] * (6 - len(home_defenders))
     away_defenders = away_defenders + [0] * (6 - len(away_defenders))
     home_midfielders = home_midfielders + [0] * (7 - len(home_midfielders))

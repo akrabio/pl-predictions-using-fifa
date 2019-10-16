@@ -152,9 +152,9 @@ if __name__ == "__main__":
 
     data = read_player_data()
 
-    match_data = read_match_data(league="SP1", season="2013-2014")
+    match_data = read_match_data(league="E0", season="2018-2019")
 
-    football_data = read_all_football_data(league="SP1")
+    football_data = read_all_football_data(league="E0")
 
     match_data = assign_odds_to_match(match_data, football_data)
 
@@ -225,5 +225,5 @@ if __name__ == "__main__":
     feature_vectors = np.array(feature_vectors)
     targets = np.array(targets)
 
-    np.save("feature-vectors-13-14.npy", feature_vectors)
-    np.save("targets-13-14.npy", targets)
+    np.save("feature-vectors-18-19.npy", feature_vectors)
+    np.save("targets-18-19.npy", targets)

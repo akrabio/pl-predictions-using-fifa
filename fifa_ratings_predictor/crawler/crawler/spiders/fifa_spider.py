@@ -9,13 +9,13 @@ class FifaSpider(scrapy.Spider):
     # TODO - run this for extended period of time to get all players
     def start_requests(self):
         urls = [
-            "https://www.fifaindex.com/players/fifa19/",
-            "https://www.fifaindex.com/players/fifa18/",
-            "https://www.fifaindex.com/players/fifa17/",
-            "https://www.fifaindex.com/players/fifa16/",
-            "https://www.fifaindex.com/players/fifa15/",
-            "https://www.fifaindex.com/players/fifa14/",
-            "https://www.fifaindex.com/players/fifa13/",
+            "https://www.fifaindex.com/players/fifa19/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa18/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa17/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa16/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa15/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa14/?league=13&order=desc",
+            "https://www.fifaindex.com/players/fifa13/?league=13&order=desc",
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -226,14 +226,14 @@ class FifaIndexTeamScraper(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            "https://www.fifaindex.com/teams/fifa19/",
-            "https://www.fifaindex.com/teams/fifa18/",
-            "https://www.fifaindex.com/teams/fifa17/",
-            "https://www.fifaindex.com/teams/fifa16/",
-            "https://www.fifaindex.com/teams/fifa15/",
-            "https://www.fifaindex.com/teams/fifa14/",
-            "https://www.fifaindex.com/teams/fifa13/",
-            "https://www.fifaindex.com/teams/fifa12/"
+            "https://www.fifaindex.com/teams/fifa19/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa18/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa17/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa16/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa15/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa14/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa13/?league=13&order=desc",
+            "https://www.fifaindex.com/teams/fifa12/?league=13&order=desc",
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)

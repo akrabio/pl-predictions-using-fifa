@@ -63,13 +63,13 @@ def calculate_stake(odds, method='constant profit', constant_profit=2, probabili
 def main():
     bet_tracker = BetTracker()
 
-    league = 'F1'
+    league = 'E0'
 
-    match_data = read_match_data(season='2017-2018', league=league)
+    match_data = read_match_data(season='2016-2017', league=league)
 
     match_data = assign_odds_to_match(match_data, read_all_football_data(league=league))
 
-    player_data = read_player_data(season='2017-2018')
+    player_data = read_player_data(season='2016-2017')
 
     net = NeuralNet()
 
@@ -123,7 +123,7 @@ def main():
 
     feature_vectors = np.vstack((x for x in feature_vectors))
 
-    probabilities = net.predict(feature_vectors, model_name='./models/' + league + '-backtest/deep')
+    probabilities = net.predict(feature_vectors, model_name='./models/' + league + '/deep')
 
     match_data = [match for match in match_data if match['match number'] not in errors]
 
@@ -178,6 +178,7 @@ def plot_backtest(bankroll, roi, plot_title, name='graph.png'):
                          'axes.labelcolor': "#333344"})
 
     flist = matplotlib.font_manager.get_fontconfig_fonts()
+    props = matplotlib.font_manager.FontProperties()
     for fname in flist:
         try:
             s = matplotlib.font_manager.FontProperties(fname=fname).get_name()
@@ -200,3 +201,4 @@ def plot_backtest(bankroll, roi, plot_title, name='graph.png'):
 
 if __name__ == '__main__':
     tracker, bankroll, odds = main()
+    plot_backtest(bankroll, tracker.roi, 'test')
