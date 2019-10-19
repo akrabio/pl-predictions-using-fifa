@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 import fifa_ratings_predictor.constants as constants
 from fifa_ratings_predictor.data_methods import read_match_data, read_player_data, normalise_features, \
-    assign_odds_to_match, read_all_football_data
+    assign_odds_to_match, read_all_football_data, get_match_info
 from fifa_ratings_predictor.matching import match_lineups_to_fifa_players, create_feature_vector_from_players
 from fifa_ratings_predictor.model import NeuralNet
 
@@ -65,11 +65,11 @@ def main():
 
     league = 'E0'
 
-    match_data = read_match_data(season='2016-2017', league=league)
+    match_data = read_match_data(season='2015-2016', league=league)
 
     match_data = assign_odds_to_match(match_data, read_all_football_data(league=league))
 
-    player_data = read_player_data(season='2016-2017')
+    player_data = read_player_data(season='2015-2016')
 
     net = NeuralNet()
 
@@ -109,10 +109,12 @@ def main():
                                                                                  match['info']['season'],
                                                                                  player_data, cached_players)
 
-            home_feature_vector = create_feature_vector_from_players(home_players_matched)
-            away_feature_vector = create_feature_vector_from_players(away_players_matched)
+            home_position, home_points, home_played, home_goals_total, home_conceded_total, home_form, away_position, \
+            away_points, away_played, away_goals_total, away_conceded_total, away_form = get_match_info(match)
+            home_feature_vector = create_feature_vector_from_players(home_players_matched) + [home_position, home_points, home_played, home_goals_total, home_conceded_total, home_form]
+            away_feature_vector = create_feature_vector_from_players(away_players_matched) + [away_position, away_points, away_played, away_goals_total, away_conceded_total, away_form]
 
-            feature_vector = np.array(home_feature_vector + away_feature_vector).reshape(-1, 36)
+            feature_vector = np.array(home_feature_vector + away_feature_vector).reshape(-1, 48)
 
             feature_vectors.append(normalise_features(feature_vector))
 
@@ -123,7 +125,7 @@ def main():
 
     feature_vectors = np.vstack((x for x in feature_vectors))
 
-    probabilities = net.predict(feature_vectors, model_name='./models/' + league + '/deep')
+    probabilities = net.predict(feature_vectors, model_name='./models/' + league + '/deep2')
 
     match_data = [match for match in match_data if match['match number'] not in errors]
 

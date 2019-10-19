@@ -31,7 +31,7 @@ def read_player_data(season=None):
 
 
 def read_match_data(season=None, sort=True, league="E0"):
-    filen = "./data/lineup-data/" + league + "/match-lineups.json"
+    filen = "./data/lineup-data/" + league + "/updated-match-lineups.json"
     with open(filen) as json_file:
         data = json.load(json_file)
 
@@ -175,6 +175,14 @@ def get_teams(match):
         constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][match["info"]["home team"]],
         constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][match["info"]["away team"]],
     )
+
+
+def get_match_info(match):
+    match_info = match["info"]
+    return match_info["home position"], match_info["home points"], match_info["home played"], \
+           match_info["home goals total"], match_info["home conceded total"], match_info["home form"],\
+           match_info["away position"], match_info["away points"],match_info["away played"],\
+           match_info["away goals total"], match_info["away conceded total"], match_info["away form"]
 
 
 def get_lineup_numbers(match):

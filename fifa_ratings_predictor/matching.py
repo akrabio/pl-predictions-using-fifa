@@ -12,6 +12,7 @@ from fifa_ratings_predictor.data_methods import (
     read_all_football_data,
     read_match_data,
     read_player_data,
+    get_match_info
 )
 
 
@@ -152,7 +153,7 @@ if __name__ == "__main__":
 
     data = read_player_data()
 
-    match_data = read_match_data(league="E0", season="2018-2019")
+    match_data = read_match_data(league="E0", season="2012-2013")
 
     football_data = read_all_football_data(league="E0")
 
@@ -177,6 +178,8 @@ if __name__ == "__main__":
         home_lineup_nationalities, away_lineup_nationalities = get_lineup_nationalities(
             test_match
         )
+        home_position, home_points, home_played, home_goals_total, home_conceded_total, home_form, away_position,\
+        away_points, away_played, away_goals_total, away_conceded_total, away_form = get_match_info(test_match)
         home_odds, draw_odds, away_odds = get_match_odds(test_match)
 
         print(i, season, "{} vs. {}".format(home_team, away_team))
@@ -206,12 +209,8 @@ if __name__ == "__main__":
                 cached_players,
             )
 
-            home_feature_vector = create_feature_vector_from_players(
-                home_players_matched
-            )
-            away_feature_vector = create_feature_vector_from_players(
-                away_players_matched
-            )
+            home_feature_vector = create_feature_vector_from_players(home_players_matched) + [home_position, home_points, home_played, home_goals_total, home_conceded_total, home_form]
+            away_feature_vector = create_feature_vector_from_players(away_players_matched) + [away_position, away_points, away_played, away_goals_total, away_conceded_total, away_form]
 
             feature_vectors.append(home_feature_vector + away_feature_vector)
             targets.append([home_odds, draw_odds, away_odds])
@@ -225,5 +224,5 @@ if __name__ == "__main__":
     feature_vectors = np.array(feature_vectors)
     targets = np.array(targets)
 
-    np.save("feature-vectors-18-19.npy", feature_vectors)
-    np.save("targets-18-19.npy", targets)
+    # np.save("up-feature-vectors-18-19.npy", feature_vectors)
+    np.save("up-targets-12-13.npy", targets)

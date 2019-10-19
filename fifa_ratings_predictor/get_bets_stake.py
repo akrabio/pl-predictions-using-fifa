@@ -92,6 +92,7 @@ def run_kelly_on_squads(number_of_bets):
     for match in matches:
         h_team = teams[match[0]]
         a_team = teams[match[1]]
+        match_info = match[5]
         h_goalkeeper = [h_team['goalkeeper']]
         h_defence = h_team['defence']
         h_midfield = h_team['midfield']
@@ -100,7 +101,7 @@ def run_kelly_on_squads(number_of_bets):
         a_defence = a_team['defence']
         a_midfield = a_team['midfield']
         a_attack = a_team['attack']
-        prob = one_match_simulator(h_goalkeeper, h_defence, h_midfield, h_attack, a_goalkeeper, a_defence, a_midfield, a_attack)
+        prob = one_match_simulator(h_goalkeeper, h_defence, h_midfield, h_attack, a_goalkeeper, a_defence, a_midfield, a_attack, match_info)
         probs.append(prob)
     all_bets = get_all_possible_bets(list(zip(probs, matches)), number_of_bets=number_of_bets)
     all_bets_reduced = extract_coefficients_from_bets(all_bets, number_of_bets)

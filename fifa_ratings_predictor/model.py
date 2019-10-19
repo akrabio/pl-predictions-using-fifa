@@ -24,7 +24,7 @@ class NeuralNet:
 
     def build_model(self):
         with self.graph.as_default():
-            self.input = tf.placeholder(tf.float32, shape=[None, 36], name='input')
+            self.input = tf.placeholder(tf.float32, shape=[None, 48], name='input')
             self.target = tf.placeholder(tf.float32, shape=[None, 3], name='target')
             self.keep_prob = tf.placeholder(tf.float32, name='keep_prob')
 
@@ -98,21 +98,23 @@ if __name__ == '__main__':
 
     league = 'E0'
 
-    inputs = np.vstack((np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-12-13.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-13-14.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-14-15.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-15-16.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-16-17.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-17-18.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/feature-vectors-18-19.npy')))
+    inputs = np.vstack((
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-12-13.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-13-14.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-14-15.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-15-16.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-16-17.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-17-18.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-feature-vectors-18-19.npy')))
     inputs = normalise_features(inputs)
-    outputs = np.vstack((np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-12-13.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-13-14.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-14-15.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-15-16.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-16-17.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-17-18.npy'),
-                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/targets-18-19.npy'))).reshape(-1, 3)
+    outputs = np.vstack((
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-12-13.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-13-14.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-14-15.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-15-16.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-16-17.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-17-18.npy'),
+                        np.load('./data/lineup-data/' + league + '/processed-numpy-arrays/up-targets-18-19.npy'))).reshape(-1, 3)
 
     nan_rows = np.where(outputs != outputs)[0]
 
@@ -124,11 +126,11 @@ if __name__ == '__main__':
     net = NeuralNet()
 
     net.train_model(inputs[:-10], outputs[:-10], inputs[-10:], outputs[-10:], model_name='./models/' + league +
-                                                                                    '/deep')
+                                                                                    '/deep2')
 
     net = NeuralNet()
 
-    predictions = net.predict(inputs[-50:], model_name='./models/' + league + '/deep')
+    predictions = net.predict(inputs[-50:], model_name='./models/' + league + '/deep2')
 
     for i, j in zip(predictions, outputs[-50:]):
         print(i)
