@@ -4,9 +4,9 @@ import json
 import itertools
 
 
-def get_teams():
+def get_teams(date):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + '/data/matchday_squads.json') as json_file:
+    with open(dir_path + '/data/matchday/matchday_squads_' + date + '.json') as json_file:
         return json.loads(json_file.read())
 
 
@@ -84,8 +84,8 @@ def extract_coefficients_from_bets(all_bets, number_of_bets):
     return all_bets_reduced
 
 
-def run_kelly_on_squads(number_of_bets):
-    squads_json = get_teams()
+def run_kelly_on_squads(number_of_bets, date):
+    squads_json = get_teams(date)
     teams = squads_json['teams']
     matches = squads_json['matches']
     probs = []
@@ -113,5 +113,5 @@ def run_kelly_on_squads(number_of_bets):
 
 
 if __name__ == '__main__':
-    run_kelly_on_squads(1)
+    run_kelly_on_squads(1, '261019')
 
