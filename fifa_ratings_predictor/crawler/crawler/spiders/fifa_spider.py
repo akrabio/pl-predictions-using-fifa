@@ -4,6 +4,40 @@ from slugify import slugify
 # scrapy crawl <spider name> -o <output file>
 
 
+class todaysResultsSpider(scrapy.Spider):
+
+    name = 'todaysresults'
+
+    def __init__(self, week='', **kwargs):
+        self.start_url = 'https://www.betstudy.com/soccer-stats/c/england/premier-league/d/results/game-week-{}/'.format(week)
+        super().__init__(**kwargs)
+
+    def start_requests(self):
+        yield scrapy.Request(url=self.start_url, callback=self.parse)
+
+    def parse(self, response):
+        table = response.css('table.schedule-table')
+        home_teams = table.css('td.right-align a::text').getall()
+        away_teams = table.css('td.left-align a::text').getall()
+        dates = [date for date in table.css('td::text').getall() if '\n' not in date or '\t' not in date]
+        results = table.css('td strong::text').getall()
+        output = []
+        for index, result in enumerate(results):
+            home_goals, away_goals = result.split('-')
+            match = {
+                'info': {
+                    'home team': slugify(home_teams[index]),
+                    'away team': slugify(away_teams[index]),
+                    'home goals': int(home_goals.strip()),
+                    'away goals': int(away_goals.strip()),
+                    'date': dates[index]
+                }
+            }
+            output.append(match)
+
+        yield {'fixtures': output}
+
+
 class winnerSpider(scrapy.Spider):
     name = "winnerodds"
 
@@ -409,25 +443,25 @@ def add_players_to_lineup(lineups, match_name, team_name, unit, players_in_row):
 
 def heb_to_eng(team_name):
     translations = {
-        "קריסטל פאלאס": 'crystal palace',
-        "לסטר": "leicester",
-        "אברטון": 'everton',
-        "טוטנהאם": 'tottenham',
-        "ליברפול": 'liverpool',
-        "מנצ׳סטר סיטי": 'man city',
-        "צ׳לסי": 'chelsea',
-        "ארסנל": 'arsenal',
-        "שפילד יונייטד": 'sheffield united',
-        "בורנמות׳": 'bournemouth',
-        "ברייטון": 'brighton',
-        "מנצ׳סטר יונייטד": 'man united',
-        "וולבס": 'wolves',
-        "ווסטהאם": 'west ham',
-        "ברנלי": 'burnley',
-        "ניוקאסל": 'newcastle',
-        "אסטון וילה": 'aston villa',
-        "סאות׳המפטון": 'southampton',
-        "נוריץ׳ סיטי": 'norwich',
-        "ווטפורד": 'watford'
+        "qrystl-pls": 'crystal palace',
+        "lstr": "leicester",
+        "brtvn": 'everton',
+        "tvtnhm": 'tottenham',
+        "lybrpvl": 'liverpool',
+        "mntsstr-syty": 'man city',
+        "tslsy": 'chelsea',
+        "rsnl": 'arsenal',
+        "shpyld-yvnyytd": 'sheffield united',
+        "bvrnmvt": 'bournemouth',
+        "bryytvn": 'brighton',
+        "mntsstr-yvnyytd": 'man united',
+        "vvlbs": 'wolves',
+        "vvsthm": 'west ham',
+        "brnly": 'burnley',
+        "nyvqsl": 'newcastle',
+        "stvn-vylh": 'aston villa',
+        "svthmptvn": 'southampton',
+        "nvryts": 'norwich city',
+        "vvtpvrd": 'watford'
     }
-    return slugify(translations[team_name])
+    return slugify(translations[slugify(team_name)])

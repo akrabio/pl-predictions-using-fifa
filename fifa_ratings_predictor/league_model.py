@@ -8,18 +8,25 @@ class LeagueTable:
     def add_result(self, home_team, away_team, home_team_goals, away_team_goals):
         for team in [home_team, away_team]:
             if team not in self.__table:
-                self.__table[team] = {"position": -1, "points": 0, "goals": 0, "conceded": 0, "played": 0, "form": []}
+                self.__table[team] = {"position": -1, "points": 0, "goals": 0, "conceded": 0, "played": 0, "win": 0,
+                                      "draw": 0, "lose": 0, "form": []}
         if home_team_goals > away_team_goals:
             self.__table[home_team]["points"] += 3
+            self.__table[home_team]["win"] += 1
+            self.__table[away_team]["lose"] += 1
             update_form(self.__table, home_team, 1)
             update_form(self.__table, away_team, -1)
         elif home_team_goals < away_team_goals:
             self.__table[away_team]["points"] += 3
+            self.__table[home_team]["lose"] += 1
+            self.__table[away_team]["win"] += 1
             update_form(self.__table, away_team, 1)
             update_form(self.__table, home_team, -1)
         else:
             self.__table[home_team]["points"] += 1
             self.__table[away_team]["points"] += 1
+            self.__table[home_team]["draw"] += 1
+            self.__table[away_team]["draw"] += 1
             update_form(self.__table, away_team, 0)
             update_form(self.__table, home_team, 0)
 
