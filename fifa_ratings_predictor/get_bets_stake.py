@@ -113,5 +113,5 @@ def run_kelly_on_squads(number_of_bets, date):
 
 
 if __name__ == '__main__':
-    run_kelly_on_squads(1, '261019')
+    run_kelly_on_squads(1, '3.11.19')
 
