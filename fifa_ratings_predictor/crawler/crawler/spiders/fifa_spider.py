@@ -461,7 +461,7 @@ def heb_to_eng(team_name):
         "nyvqsl": 'newcastle',
         "stvn-vylh": 'aston villa',
         "svthmptvn": 'southampton',
-        "nvryts": 'norwich city',
+        "nvryts": 'norwich',
         "vvtpvrd": 'watford'
     }
     return slugify(translations[slugify(team_name)])

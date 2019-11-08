@@ -1,6 +1,7 @@
 import os
 import json
 from fifa_ratings_predictor.league_model import LeagueTable
+import fifa_ratings_predictor.constants as constants
 
 
 def get_odds():
@@ -41,7 +42,9 @@ def create_league_object():
     fixtures = get_fixtures()
     for fixture in fixtures:
         fixture = fixture['info']
-        league.add_result(fixture['home team'], fixture['away team'], fixture['home goals'], fixture['away goals'])
+        league.add_result(constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][fixture['home team']],
+                          constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][fixture['away team']],
+                          fixture['home goals'], fixture['away goals'])
     return league
 
 
@@ -87,4 +90,4 @@ def create_matchday_file(date):
 
 
 if __name__ == '__main__':
-    create_matchday_file('3.11.19')
+    create_matchday_file('8.11.19')
