@@ -409,25 +409,25 @@ def add_players_to_lineup(lineups, match_name, team_name, unit, players_in_row):
 
 def heb_to_eng(team_name):
     translations = {
-        "קריסטל פאלאס": 'crystal palace',
-        "לסטר": "leicester",
-        "אברטון": 'everton',
-        "טוטנהאם": 'tottenham',
-        "ליברפול": 'liverpool',
-        "מנצ׳סטר סיטי": 'man city',
-        "צ׳לסי": 'chelsea',
-        "ארסנל": 'arsenal',
-        "שפילד יונייטד": 'sheffield united',
-        "בורנמות׳": 'bournemouth',
-        "ברייטון": 'brighton',
-        "מנצ׳סטר יונייטד": 'man united',
-        "וולבס": 'wolves',
-        "ווסטהאם": 'west ham',
-        "ברנלי": 'burnley',
-        "ניוקאסל": 'newcastle',
-        "אסטון וילה": 'aston villa',
-        "סאות׳המפטון": 'southampton',
-        "נוריץ׳ סיטי": 'norwich',
-        "ווטפורד": 'watford'
+        "qrystl-pls": 'crystal palace',
+        "lstr": "leicester",
+        "brtvn": 'everton',
+        "tvtnhm": 'tottenham',
+        "lybrpvl": 'liverpool',
+        "mntsstr-syty": 'man city',
+        "tslsy": 'chelsea',
+        "rsnl": 'arsenal',
+        "shpyld-yvnyytd": 'sheffield united',
+        "bvrnmvt": 'bournemouth',
+        "bryytvn": 'brighton',
+        "mntsstr-yvnyytd": 'man united',
+        "vvlbs": 'wolves',
+        "vvsthm": 'west ham',
+        "brnly": 'burnley',
+        "nyvqsl": 'newcastle',
+        "stvn-vylh": 'aston villa',
+        "svthmptvn": 'southampton',
+        "nvryts": 'norwich',
+        "vvtpvrd": 'watford'
     }
-    return slugify(translations[team_name])
+    return slugify(translations[slugify(team_name)])
