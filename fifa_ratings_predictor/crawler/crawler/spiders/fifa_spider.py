@@ -450,6 +450,7 @@ def heb_to_eng(team_name):
         "lybrpvl": 'liverpool',
         "mntsstr-syty": 'man city',
         "tslsy": 'chelsea',
+        "ts-lsy": 'chelsea',
         "rsnl": 'arsenal',
         "shpyld-yvnyytd": 'sheffield united',
         "bvrnmvt": 'bournemouth',
@@ -461,6 +462,7 @@ def heb_to_eng(team_name):
         "nyvqsl": 'newcastle',
         "stvn-vylh": 'aston villa',
         "svthmptvn": 'southampton',
+        "svt-hmptvn": 'southampton',
         "nvryts": 'norwich',
         "vvtpvrd": 'watford'
     }

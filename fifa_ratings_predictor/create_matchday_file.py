@@ -64,6 +64,7 @@ def create_matchday_object():
 
     for _, match in lineups.items():
         for team_name, team in match.items():
+            team_name = constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][team_name]
             output['teams'][team_name] = {}
             for unit, unit_players in team.items():
                 output['teams'][team_name][unit] = []
@@ -90,4 +91,4 @@ def create_matchday_file(date):
 
 
 if __name__ == '__main__':
-    create_matchday_file('8.11.19')
+    create_matchday_file('9.11.19')
