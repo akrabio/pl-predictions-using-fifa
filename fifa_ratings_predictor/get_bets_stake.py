@@ -20,16 +20,27 @@ def kelly_criterion(p, b):
 def extended_kelly_criterion(all_bets):
     best = -100
     best_bet = None
+    sec_best_bet = None
+    sec_best_stake = None
+    third_best_bet = None
+    third_best_stake = None
     for bet in all_bets:
         p = bet[1]
         b = bet[2]
         stake = kelly_criterion(p, b)
         if stake > best:
+            if best_bet:
+                if sec_best_bet:
+                    third_best_bet = sec_best_bet
+                    third_best_stake = sec_best_stake
+                sec_best_bet = best_bet
+                sec_best_stake = best
             best = stake
             best_bet = bet
+
             print('current best stake: {}\ncurrent matches: {}\nbet: {}'.format(best, bet[0],bet[3]))
 
-    return best, best_bet
+    return [(best, best_bet), (sec_best_stake, sec_best_bet), (third_best_stake, third_best_bet)]
 
 
 def get_all_bets_for_single_match(match_name, match):
@@ -105,11 +116,12 @@ def run_kelly_on_squads(number_of_bets, date):
         probs.append(prob)
     all_bets = get_all_possible_bets(list(zip(probs, matches)), number_of_bets=number_of_bets)
     all_bets_reduced = extract_coefficients_from_bets(all_bets, number_of_bets)
-    stake, picked_matches = extended_kelly_criterion(all_bets_reduced)
-    print('\nstake: {}\nmatches: {}\nprobability of outcome: {}\nodds: {}\n1X2(012): {}\n'.format(stake, picked_matches[0],
-                                                                                              picked_matches[1],
-                                                                                              picked_matches[2],
-                                                                                              picked_matches[3]))
+    results = extended_kelly_criterion(all_bets_reduced)
+    for result in results:
+        print('\nstake: {}\nmatches: {}\nprobability of outcome: {}\nodds: {}\n1X2(012): {}\n'.format(results[0][0], result[1][0],
+                                                                                              result[1][1],
+                                                                                              result[1][2],
+                                                                                              result[1][3]))
 
 
 if __name__ == '__main__':
