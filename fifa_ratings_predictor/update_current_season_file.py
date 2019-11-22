@@ -27,6 +27,6 @@ def add_new_fixtures(week):
 
 
 if __name__ == '__main__':
-    add_new_fixtures(11)
+    add_new_fixtures(12)
 
 

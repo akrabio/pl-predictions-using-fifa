@@ -449,6 +449,7 @@ def heb_to_eng(team_name):
         "tvtnhm": 'tottenham',
         "lybrpvl": 'liverpool',
         "mntsstr-syty": 'man city',
+        "mnts-str-syty": 'man city',
         "tslsy": 'chelsea',
         "ts-lsy": 'chelsea',
         "rsnl": 'arsenal',
