@@ -79,6 +79,7 @@ LINEUP_TO_PLAYER_TEAM_MAPPINGS = {'2017-2018': {'afc-bournemouth': 'bournemouth'
                                           'west-ham-united': 'west-ham',
                                           'wigan-athletic': 'wigan',
                                           'wolverhampton-wanderers': 'wolves',
+                                          'wolverhampton': 'wolves',
                                           'almeria': 'ud-almeria',
                                           'athletic-club': 'athletic-bilbao',
                                           'atletico-madrid': 'atletico-madrid',

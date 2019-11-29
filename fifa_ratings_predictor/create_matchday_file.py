@@ -58,4 +58,4 @@ def create_matchday_file(date):
 
 
 if __name__ == '__main__':
-    create_matchday_file('8.11.19')
+    create_matchday_file('24.11.19')
