@@ -16,15 +16,24 @@ class todaysResultsSpider(scrapy.Spider):
         yield scrapy.Request(url=self.start_url, callback=self.parse)
 
     def parse(self, response):
+        match_number_strings = response.css('tr.rounds').css('ul.action-list li a::attr(href)').getall()
+        match_numbers = [int(item.split("-")[-1].split("/")[0]) for item in match_number_strings]
         table = response.css('table.schedule-table')
         home_teams = table.css('td.right-align a::text').getall()
         away_teams = table.css('td.left-align a::text').getall()
         dates = [date for date in table.css('td::text').getall() if '\n' not in date or '\t' not in date]
+        results_raw = table.css('td strong').getall()
         results = table.css('td strong::text').getall()
         output = []
         for index, result in enumerate(results):
+            if 'Pstp' in results_raw[index]:
+                match_numbers.remove(match_numbers[index])
+                home_teams.remove(home_teams[index])
+                away_teams.remove(away_teams[index])
+                dates.remove(dates[index])
             home_goals, away_goals = result.split('-')
             match = {
+                'match number': match_numbers[index],
                 'info': {
                     'home team': slugify(home_teams[index]),
                     'away team': slugify(away_teams[index]),
@@ -35,7 +44,7 @@ class todaysResultsSpider(scrapy.Spider):
             }
             output.append(match)
 
-        yield {'fixtures': output}
+        yield {'fixtures': output, 'match_numbers': match_numbers}
 
 
 class winnerSpider(scrapy.Spider):
@@ -456,7 +465,8 @@ def heb_to_eng(team_name):
         "shpyld-yvnyytd": 'sheffield united',
         "bvrnmvt": 'bournemouth',
         "bryytvn": 'brighton',
-        "mntsstr-yvnyytd": 'man united',
+        "mntsstr-yvnyytd": 'man utd',
+        "mnts-str-yvnyytd": 'man utd',
         "vvlbs": 'wolves',
         "vvsthm": 'west ham',
         "brnly": 'burnley',

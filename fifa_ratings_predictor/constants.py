@@ -74,6 +74,7 @@ LINEUP_TO_PLAYER_TEAM_MAPPINGS = {'2017-2018': {'afc-bournemouth': 'bournemouth'
                                           'newcastle-united': 'newcastle',
                                           'newcastle': 'newcastle',
                                           'norwich-city': 'norwich',
+                                          'norwich': 'norwich',
                                           'queens-park-rangers': 'qpr',
                                           'reading': 'reading',
                                           'sheffield-united': 'sheffield-united',

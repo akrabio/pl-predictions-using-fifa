@@ -117,14 +117,15 @@ def run_kelly_on_squads(number_of_bets, date):
     all_bets = get_all_possible_bets(list(zip(probs, matches)), number_of_bets=number_of_bets)
     all_bets_reduced = extract_coefficients_from_bets(all_bets, number_of_bets)
     results = extended_kelly_criterion(all_bets_reduced)
-    for result in results:
+    for i, result in enumerate(results):
         if result[0]:
-            print('\nstake: {}\nmatches: {}\nprobability of outcome: {}\nodds: {}\n1X2(012): {}\n'.format(result[0], result[1][0],
+            print('\n----- {} ------\n'.format(i+1))
+            print('stake: {}\nmatches: {}\nprobability of outcome: {}\nodds: {}\n1X2(012): {}\n'.format(result[0], result[1][0],
                                                                                               result[1][1],
                                                                                               result[1][2],
                                                                                               result[1][3]))
 
 
 if __name__ == '__main__':
-    run_kelly_on_squads(2, '9.11.19')
+    run_kelly_on_squads(1, '1.12.19')
 

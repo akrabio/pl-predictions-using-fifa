@@ -40,7 +40,7 @@ def get_from_crawler(spider_name, arg=None):
 def create_league_object():
     league = LeagueTable()
     fixtures = get_fixtures()
-    for fixture in fixtures:
+    for fixture in sorted(fixtures, key=lambda x: x['match number']):
         fixture = fixture['info']
         league.add_result(constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][fixture['home team']],
                           constants.LINEUP_TO_PLAYER_TEAM_MAPPINGS["ALL"][fixture['away team']],
@@ -91,4 +91,4 @@ def create_matchday_file(date):
 
 
 if __name__ == '__main__':
-    create_matchday_file('10.11.19')
+    create_matchday_file('1.12.19')
